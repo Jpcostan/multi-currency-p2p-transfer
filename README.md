@@ -381,24 +381,46 @@ curl -X GET http://localhost:3000/api/transactions/stats \
 
 ## Testing
 
-### If You're Using Docker (Option 1)
+### Understanding Docker vs Local Testing
 
-When running the app via Docker, dependencies are installed **inside the container**, not on your host machine. You have two ways to run tests:
+| Environment | Purpose | How to Verify |
+|-------------|---------|---------------|
+| **Docker** | Production deployment | Test via API calls (curl, Postman) |
+| **Local** | Development & testing | Run unit/integration tests with Jest |
 
-**Option A: Run tests inside the container**
+**Why can't I run tests in Docker?**
+
+The Docker image is optimized for **production** - it only includes runtime dependencies to keep the image small and secure. Test dependencies (Jest, etc.) are intentionally excluded.
+
+- ✅ **Docker**: Run the app, test via API calls
+- ✅ **Local**: Run the test suite with `npm test`
+- ❌ **Docker**: `npm test` will not work (Jest not installed)
+
+### Running the Test Suite (Local)
+
+To run unit and integration tests, you must run locally:
+
 ```bash
-# Make sure the container is running first
-docker-compose up -d
+# Install dependencies (includes Jest and test utilities)
+npm install
 
-# Run tests inside the container
-docker exec -it p2p-payment-api npm test
+# Run all tests
+npm test
 
-# Run tests with coverage
-docker exec -it p2p-payment-api npm run test:coverage
+# Run tests with coverage report
+npm run test:coverage
 ```
 
-**Option B: Test the API manually with curl**
+> **Note**: Tests use an in-memory SQLite database and won't affect your Docker container or local data.
+
+### Verifying Docker is Working (API Testing)
+
+If you're running the app via Docker and want to verify it's working correctly, test the API endpoints directly:
+
 ```bash
+# Make sure container is running
+docker-compose up -d
+
 # Health check
 curl http://localhost:3000/health | jq
 
@@ -406,21 +428,9 @@ curl http://localhost:3000/health | jq
 curl -X POST http://localhost:3000/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","username":"testuser","password":"TestPass123"}' | jq
+
+# See "API Examples" section above for more endpoint tests
 ```
-
-### If You're Running Locally (Option 2)
-
-When running locally, you have `node_modules` installed on your machine, so you can run tests directly:
-
-```bash
-# Run all tests
-npm test
-
-# Run tests with coverage
-npm run test:coverage
-```
-
-> **Note**: If you see `jest: command not found`, you need to run `npm install` first.
 
 ### Expected Test Results
 
