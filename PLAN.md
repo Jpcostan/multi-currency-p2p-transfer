@@ -34,19 +34,19 @@ This document outlines the comprehensive plan for building a production-quality 
        ▼
 ┌─────────────────────────────────────┐
 │        Express.js API Layer         │
-│  ┌──────────────────────────────┐  │
-│  │   Route Controllers          │  │
-│  └──────────┬───────────────────┘  │
+│  ┌──────────────────────────────┐   │
+│  │   Route Controllers          │   │
+│  └──────────┬───────────────────┘   │
 │             ▼                       │
-│  ┌──────────────────────────────┐  │
-│  │   Service Layer (Business    │  │
-│  │   Logic & Validations)       │  │
-│  └──────────┬───────────────────┘  │
+│  ┌──────────────────────────────┐   │
+│  │   Service Layer (Business    │   │
+│  │   Logic & Validations)       │   │
+│  └──────────┬───────────────────┘   │
 │             ▼                       │
-│  ┌──────────────────────────────┐  │
-│  │   Repository Layer (Data     │  │
-│  │   Access)                    │  │
-│  └──────────┬───────────────────┘  │
+│  ┌──────────────────────────────┐   │
+│  │   Repository Layer (Data     │   │
+│  │   Access)                    │   │
+│  └──────────┬───────────────────┘   │
 └─────────────┼───────────────────────┘
               ▼
        ┌─────────────┐
@@ -1673,7 +1673,7 @@ module.exports = {
 
 ### Tools Used
 
-This plan was created with assistance from **Claude (Anthropic)**. AI was used for:
+This plan was created with assistance from **Claude (Anthropic)...Sacré bleu!**. AI was used for:
 
 1. **System Architecture Design**
    - Layered architecture pattern selection
