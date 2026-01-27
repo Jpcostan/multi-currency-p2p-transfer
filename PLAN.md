@@ -769,7 +769,7 @@ export function getConversionRate(from: Currency, to: Currency): number {
 
 ## Implementation Roadmap
 
-### Phase 1: Foundation (Days 1-2)
+### Phase 1: Foundation
 
 **Goals**: Setup project, infrastructure, and basic structure
 
@@ -802,7 +802,7 @@ export function getConversionRate(from: Currency, to: Currency): number {
 - Database with schema and indexes
 - Basic Express server responding to `/health` endpoint
 
-### Phase 2: Core Domain & Data Layer (Days 3-4)
+### Phase 2: Core Domain & Data Layer
 
 **Goals**: Implement domain models, repositories, and database operations
 
@@ -831,7 +831,7 @@ export function getConversionRate(from: Currency, to: Currency): number {
 - Unit tests for repositories (in-memory or test DB)
 - Currency conversion utilities tested
 
-### Phase 3: Business Logic Layer (Days 5-6)
+### Phase 3: Business Logic Layer
 
 **Goals**: Implement services with core business logic
 
@@ -860,7 +860,7 @@ export function getConversionRate(from: Currency, to: Currency): number {
 - Unit tests for all services (mocked repositories)
 - Edge case handling (insufficient balance, invalid users, etc.)
 
-### Phase 4: API Layer (Days 7-8)
+### Phase 4: API Layer
 
 **Goals**: Build RESTful API endpoints
 
@@ -898,7 +898,7 @@ export function getConversionRate(from: Currency, to: Currency): number {
 - Integration tests for all endpoints
 - Postman/cURL examples in README
 
-### Phase 5: Testing (Days 9-10)
+### Phase 5: Testing
 
 **Goals**: Comprehensive test coverage
 
@@ -928,7 +928,7 @@ export function getConversionRate(from: Currency, to: Currency): number {
 - All tests passing
 - Coverage report (aim for 80%+)
 
-### Phase 6: Security & Production Readiness (Days 11-12)
+### Phase 6: Security & Production Readiness
 
 **Goals**: Harden security, add production features
 
@@ -958,7 +958,7 @@ export function getConversionRate(from: Currency, to: Currency): number {
 - Logging framework configured
 - Performance benchmarks documented
 
-### Phase 7: Documentation & Deployment (Days 13-14)
+### Phase 7: Documentation & Deployment
 
 **Goals**: Complete documentation, finalize deployment
 
@@ -1082,7 +1082,7 @@ describe('TransactionService', () => {
 });
 ```
 
-### 2. Integration Tests (30% of tests)
+### 2. Integration Tests (~30% of tests)
 
 **Scope**: Test API endpoints with real database
 
@@ -1154,7 +1154,7 @@ describe('POST /api/transfer', () => {
 });
 ```
 
-### 3. End-to-End Tests (10% of tests)
+### 3. End-to-End Tests (~10% of tests)
 
 **Scope**: Complete user journeys
 
