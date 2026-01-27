@@ -46,10 +46,10 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/multi-currency-p2p-transfer.git
+git clone https://github.com/Jpcostan/multi-currency-p2p-transfer.git
 cd multi-currency-p2p-transfer
 
-# Start the application
+# Start the application (no .env file needed - uses built-in defaults)
 docker-compose up --build
 ```
 
@@ -60,11 +60,13 @@ Verify it's running:
 curl http://localhost:3000/health
 ```
 
+> **Note**: Docker uses secure default values. For production deployment, set `JWT_SECRET` environment variable to a strong random value.
+
 ### Option 2: Run Locally (Without Docker)
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/multi-currency-p2p-transfer.git
+git clone https://github.com/Jpcostan/multi-currency-p2p-transfer.git
 cd multi-currency-p2p-transfer
 
 # Install dependencies
