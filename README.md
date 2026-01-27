@@ -381,19 +381,49 @@ curl -X GET http://localhost:3000/api/transactions/stats \
 
 ## Testing
 
-### Run All Tests
+### If You're Using Docker (Option 1)
 
+When running the app via Docker, dependencies are installed **inside the container**, not on your host machine. You have two ways to run tests:
+
+**Option A: Run tests inside the container**
 ```bash
-npm test
+# Make sure the container is running first
+docker-compose up -d
+
+# Run tests inside the container
+docker exec -it p2p-payment-api npm test
+
+# Run tests with coverage
+docker exec -it p2p-payment-api npm run test:coverage
 ```
 
-### Run Tests with Coverage
+**Option B: Test the API manually with curl**
+```bash
+# Health check
+curl http://localhost:3000/health | jq
+
+# Register a user
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","username":"testuser","password":"TestPass123"}' | jq
+```
+
+### If You're Running Locally (Option 2)
+
+When running locally, you have `node_modules` installed on your machine, so you can run tests directly:
 
 ```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
 npm run test:coverage
 ```
 
-Expected output:
+> **Note**: If you see `jest: command not found`, you need to run `npm install` first.
+
+### Expected Test Results
+
 - **257 tests passing**
 - **90%+ code coverage**
 
@@ -408,6 +438,13 @@ npm test -- tests/integration
 
 # Specific file
 npm test -- tests/unit/services/transaction.service.test.ts
+```
+
+### Troubleshooting Tests
+
+If you encounter the `better-sqlite3` native module error when running tests:
+```bash
+npm rebuild better-sqlite3
 ```
 
 ---
