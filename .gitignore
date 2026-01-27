@@ -4,12 +4,19 @@ node_modules/
 # Build output
 dist/
 coverage/
+*.tsbuildinfo
 
 # Environment variables (never commit secrets)
 .env
 .env.local
 .env.development
 .env.production
+.env.test
+
+# Security - never commit keys/certs
+*.pem
+*.key
+*.crt
 
 # SQLite database files (local data only)
 *.sqlite

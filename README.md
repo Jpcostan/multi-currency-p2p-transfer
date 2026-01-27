@@ -96,6 +96,23 @@ npm run dev
 
 - Note: SQLite database will be created locally in ./data.
 
+### Troubleshooting: `better-sqlite3` Native Module Error
+
+If you see this error when running `npm run dev`, `npm start`, or `npm test`:
+
+```
+The module '.../better_sqlite3.node' was compiled against a different Node.js version
+using NODE_MODULE_VERSION 115. This version of Node.js requires NODE_MODULE_VERSION 127.
+```
+
+**Fix:** Rebuild the native module for your current Node.js version:
+
+```bash
+npm rebuild better-sqlite3
+```
+
+This commonly occurs after switching Node.js versions (e.g., via nvm) or after system updates.
+
 ## API Overview
 
 ### Authentication
