@@ -134,14 +134,16 @@ export function Transfer() {
                     placeholder="0.00"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    min="0.01"
-                    step="0.01"
+                    min={fromCurrency === 'BTC' || fromCurrency === 'ETH' ? '0.00000001' : '0.01'}
+                    step={fromCurrency === 'BTC' || fromCurrency === 'ETH' ? '0.00000001' : '0.01'}
                     max={maxAmount}
                     required
                   />
                   {selectedBalance && (
                     <div className="balance-hint">
-                      Available: {selectedBalance.amount.toFixed(2)} {fromCurrency}
+                      Available: {fromCurrency === 'BTC' || fromCurrency === 'ETH'
+                        ? selectedBalance.amount.toFixed(8)
+                        : selectedBalance.amount.toFixed(2)} {fromCurrency}
                     </div>
                   )}
                 </div>
@@ -156,6 +158,7 @@ export function Transfer() {
                     <option value="EUR">EUR</option>
                     <option value="GBP">GBP</option>
                     <option value="BTC">BTC</option>
+                    <option value="ETH">ETH</option>
                   </select>
                 </div>
               </div>
@@ -189,6 +192,7 @@ export function Transfer() {
                     <option value="EUR">EUR</option>
                     <option value="GBP">GBP</option>
                     <option value="BTC">BTC</option>
+                    <option value="ETH">ETH</option>
                   </select>
                 </div>
               </div>

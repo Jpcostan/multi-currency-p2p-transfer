@@ -38,8 +38,8 @@ describe('BalanceRepository', () => {
 
       const balances = repository.findAllByUserId(aliceId);
 
-      expect(balances).toHaveLength(4);
-      expect(balances.map((b) => b.currency).sort()).toEqual(['BTC', 'ETH', 'EUR', 'USD']);
+      expect(balances).toHaveLength(5);
+      expect(balances.map((b) => b.currency).sort()).toEqual(['BTC', 'ETH', 'EUR', 'GBP', 'USD']);
       expect(balances.every((b) => b.amount === 0n)).toBe(true);
     });
   });
@@ -50,7 +50,7 @@ describe('BalanceRepository', () => {
 
       const balances = repository.findAllByUserId(aliceId);
 
-      expect(balances).toHaveLength(4);
+      expect(balances).toHaveLength(5);
     });
 
     it('should return empty array for user with no balances', () => {

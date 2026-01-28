@@ -3,6 +3,7 @@ import './TransactionItem.css';
 
 interface TransactionItemProps {
   transaction: Transaction;
+  currentUserId: number;
 }
 
 const TYPE_CONFIG: Record<string, { icon: string; label: string; color: string }> = {
@@ -42,9 +43,12 @@ function formatDate(dateStr: string): string {
   return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export function TransactionItem({ transaction }: TransactionItemProps) {
+export function TransactionItem({ transaction, currentUserId }: TransactionItemProps) {
   const typeConfig = TYPE_CONFIG[transaction.type] || { icon: '•', label: transaction.type, color: 'gray' };
   const statusConfig = STATUS_CONFIG[transaction.status] || { label: transaction.status, className: '' };
+
+  // Determine if current user is the sender (outgoing) or receiver (incoming)
+  const isOutgoing = transaction.senderId === currentUserId;
 
   const getDescription = () => {
     switch (transaction.type) {
@@ -54,38 +58,49 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
         return `Withdrew ${formatAmount(transaction.fromAmount, transaction.fromCurrency)}`;
       case 'transfer':
         if (transaction.counterpartyUsername) {
-          return transaction.fromAmount !== '0'
+          return isOutgoing
             ? `Sent to ${transaction.counterpartyUsername}`
             : `Received from ${transaction.counterpartyUsername}`;
         }
-        return 'Transfer';
+        return isOutgoing ? 'Sent' : 'Received';
       case 'conversion':
         return `${formatAmount(transaction.fromAmount, transaction.fromCurrency)} → ${formatAmount(transaction.toAmount, transaction.toCurrency)}`;
       default:
-        return transaction.description || 'Transaction';
+        return 'Transaction';
     }
   };
 
   const getAmount = () => {
-    const isNegative = transaction.type === 'withdrawal' ||
-      (transaction.type === 'transfer' && parseFloat(transaction.fromAmount) > 0);
-
     if (transaction.type === 'conversion') {
       return null; // Show in description instead
     }
 
-    const amount = transaction.type === 'deposit' || (transaction.type === 'transfer' && parseFloat(transaction.fromAmount) === 0)
-      ? transaction.toAmount
-      : transaction.fromAmount;
+    if (transaction.type === 'deposit') {
+      return {
+        value: formatAmount(transaction.toAmount, transaction.toCurrency),
+        isNegative: false,
+      };
+    }
 
-    const currency = transaction.type === 'deposit' || (transaction.type === 'transfer' && parseFloat(transaction.fromAmount) === 0)
-      ? transaction.toCurrency
-      : transaction.fromCurrency;
+    if (transaction.type === 'withdrawal') {
+      return {
+        value: formatAmount(transaction.fromAmount, transaction.fromCurrency),
+        isNegative: true,
+      };
+    }
 
-    return {
-      value: formatAmount(amount, currency),
-      isNegative,
-    };
+    // For transfers, show from sender's perspective or receiver's perspective
+    if (isOutgoing) {
+      return {
+        value: formatAmount(transaction.fromAmount, transaction.fromCurrency),
+        isNegative: true,
+      };
+    } else {
+      return {
+        value: formatAmount(transaction.toAmount, transaction.toCurrency),
+        isNegative: false,
+      };
+    }
   };
 
   const amountInfo = getAmount();

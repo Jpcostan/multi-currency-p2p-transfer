@@ -9,7 +9,7 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 ## Features
 
 - **User Authentication** - JWT-based registration and login
-- **Multi-Currency Wallets** - Each user gets USD, EUR, BTC, and ETH balances
+- **Multi-Currency Wallets** - Each user gets USD, EUR, GBP, BTC, and ETH balances
 - **P2P Transfers** - Send money to other users by email or username
 - **Currency Conversion** - Automatic conversion with live exchange rates from CoinGecko
 - **Atomic Transactions** - All-or-nothing transfers with balance validation
@@ -697,6 +697,52 @@ All amounts stored as integers in base units to avoid floating-point errors:
 - USD/EUR: cents (100 = $1.00)
 - BTC: satoshis (100,000,000 = 1 BTC)
 - ETH: wei (10^18 = 1 ETH)
+
+---
+
+## Troubleshooting
+
+### Database Schema Mismatch After Updates
+
+**Error:**
+```
+SqliteError: CHECK constraint failed: currency IN ('USD', 'EUR', 'BTC', 'ETH')
+```
+
+**Cause:** The existing SQLite database was created with an older schema that doesn't include all supported currencies. This happens when pulling updates that add new currency support.
+
+**Fix (Docker):**
+```bash
+docker-compose down
+docker volume rm multi-currency-p2p-transfer_sqlite-data
+docker-compose up --build
+```
+
+**Fix (Local):**
+```bash
+rm -rf data/database.sqlite
+npm run dev
+```
+
+> **Note:** This will delete all existing data. The database will be recreated with the correct schema on next startup.
+
+### Port 3000 Already in Use
+
+```bash
+lsof -ti:3000 | xargs kill -9
+```
+
+### better-sqlite3 Node Version Mismatch
+
+**Error:**
+```
+The module '.../better_sqlite3.node' was compiled against a different Node.js version
+```
+
+**Fix:**
+```bash
+npm rebuild better-sqlite3
+```
 
 ---
 

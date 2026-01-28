@@ -58,7 +58,7 @@ describe('UserService', () => {
 
       // Check that balances were created for all currencies
       const balances = balanceRepository.findAllByUserId(1);
-      expect(balances.length).toBe(4); // USD, EUR, BTC, ETH
+      expect(balances.length).toBe(5); // USD, EUR, GBP, BTC, ETH
       balances.forEach((balance: Balance) => {
         expect(balance.amount).toBe(0n);
       });

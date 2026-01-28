@@ -4,13 +4,13 @@
 
 ---
 
-## Current Phase: Phase 8 - Frontend + Live Rates ✅ IMPLEMENTATION COMPLETE
+## Current Phase: Phase 9 - Final QA & Verification
 
-**Goal**: Create frontend UI and add real-time exchange rates
+**Goal**: Thorough end-to-end verification before marking project complete
 
-**Status**: Implementation complete, awaiting manual testing
+**Status**: Ready to begin
 
-**Next Step**: Run through the Phase 8 Testing Summary Checklist in PLAN.md
+**Previous Phase**: Phase 8 completed with all tests passing (2026-01-28)
 
 ---
 
@@ -174,10 +174,14 @@ docker-compose logs -f      # View logs
 ## Technical Decisions Made
 
 ### Currency Precision
-- USD/EUR: cents (100 = $1.00)
+- USD/EUR/GBP: cents/pence (100 = $1.00 or £1.00)
 - BTC: satoshis (100,000,000 = 1 BTC)
 - ETH: wei (10^18 = 1 ETH)
 - All stored as INTEGER in SQLite
+
+### Supported Currencies
+- **Fiat**: USD (US Dollar), EUR (Euro), GBP (British Pound)
+- **Crypto**: BTC (Bitcoin), ETH (Ethereum)
 
 ### Architecture
 - Layered: Controller → Service → Repository → DB
@@ -329,11 +333,37 @@ Tasks:
 
 - npm audit shows 3 high severity vulnerabilities in transitive dependencies (jest → node-notifier chain). These are dev dependencies only and don't affect production.
 
-- **Minor frontend bug**: The frontend currency dropdowns include GBP, but the backend only supports USD, EUR, BTC, ETH. Users selecting GBP will get errors. To fix: either add GBP to backend `src/types/currency.types.ts` or remove GBP from frontend dropdowns in `Dashboard.tsx` and `Transfer.tsx`.
-
 ---
 
 ## Troubleshooting
+
+### Database Schema Mismatch After Currency Updates
+
+**Error:**
+```
+SqliteError: CHECK constraint failed: currency IN ('USD', 'EUR', 'BTC', 'ETH')
+```
+
+**Cause:** Existing SQLite database was created with old schema that doesn't include GBP (or other newly added currencies).
+
+**When it happens:** After pulling updates that add new currency support to the backend.
+
+**Fix (Docker):**
+```bash
+docker-compose down
+docker volume rm multi-currency-p2p-transfer_sqlite-data
+docker-compose up --build
+```
+
+**Fix (Local):**
+```bash
+rm -rf data/database.sqlite
+npm run dev
+```
+
+> **Note:** This deletes all existing data. Database recreates with correct schema on next startup.
+
+---
 
 ### `better-sqlite3` Node Version Mismatch
 
@@ -402,4 +432,4 @@ lsof -ti:3000 | xargs kill -9
 
 ---
 
-*Last Updated: 2026-01-27 - Phase 8 Complete (Frontend + Live Rates)*
+*Last Updated: 2026-01-28 - Added GBP currency support (5 currencies total)*

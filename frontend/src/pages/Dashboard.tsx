@@ -125,7 +125,7 @@ export function Dashboard() {
                   </div>
                 ) : (
                   transactions.map((tx) => (
-                    <TransactionItem key={tx.id} transaction={tx} />
+                    <TransactionItem key={tx.id} transaction={tx} currentUserId={user?.id || 0} />
                   ))
                 )}
               </div>
@@ -195,6 +195,7 @@ export function Dashboard() {
                     <option value="EUR">EUR - Euro</option>
                     <option value="GBP">GBP - British Pound</option>
                     <option value="BTC">BTC - Bitcoin</option>
+                    <option value="ETH">ETH - Ethereum</option>
                   </select>
                 </div>
 

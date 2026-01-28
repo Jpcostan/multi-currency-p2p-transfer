@@ -1,7 +1,7 @@
 // API Types - matching backend responses
 
 export interface User {
-  id: string;
+  id: number;
   email: string;
   username: string;
   createdAt: string;
@@ -22,20 +22,17 @@ export interface BalancesResponse {
 
 export interface Transaction {
   id: number;
-  userId: number;
+  senderId: number;
+  receiverId: number;
   type: 'deposit' | 'withdrawal' | 'transfer' | 'conversion';
   status: 'pending' | 'completed' | 'failed';
   fromCurrency: string;
   toCurrency: string;
   fromAmount: string;
   toAmount: string;
-  fee: string;
-  exchangeRate: string | null;
-  counterpartyId: number | null;
+  conversionRate: number;
   counterpartyUsername?: string;
-  description: string | null;
   createdAt: string;
-  updatedAt: string;
 }
 
 export interface ConversionRate {

@@ -38,7 +38,7 @@ describe('Balance API', () => {
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
       expect(response.body.data.balances).toBeDefined();
-      expect(response.body.data.balances.length).toBe(4); // USD, EUR, BTC, ETH
+      expect(response.body.data.balances.length).toBe(5); // USD, EUR, GBP, BTC, ETH
 
       // All balances should be zero initially
       response.body.data.balances.forEach((balance: { amount: number }) => {

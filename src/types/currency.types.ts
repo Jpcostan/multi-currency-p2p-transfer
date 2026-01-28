@@ -9,10 +9,11 @@
  * Supported currency codes.
  * - USD: US Dollar
  * - EUR: Euro
+ * - GBP: British Pound
  * - BTC: Bitcoin
  * - ETH: Ethereum
  */
-export type Currency = 'USD' | 'EUR' | 'BTC' | 'ETH';
+export type Currency = 'USD' | 'EUR' | 'GBP' | 'BTC' | 'ETH';
 
 /**
  * Array of all supported currencies for iteration/validation.
@@ -20,6 +21,7 @@ export type Currency = 'USD' | 'EUR' | 'BTC' | 'ETH';
 export const SUPPORTED_CURRENCIES: readonly Currency[] = [
   'USD',
   'EUR',
+  'GBP',
   'BTC',
   'ETH',
 ] as const;
@@ -35,6 +37,7 @@ export const SUPPORTED_CURRENCIES: readonly Currency[] = [
 export const CURRENCY_PRECISION: Record<Currency, number | bigint> = {
   USD: 100,                    // 1 USD = 100 cents
   EUR: 100,                    // 1 EUR = 100 cents
+  GBP: 100,                    // 1 GBP = 100 pence
   BTC: 100_000_000,            // 1 BTC = 100,000,000 satoshis
   ETH: BigInt('1000000000000000000'), // 1 ETH = 10^18 wei
 };
@@ -46,6 +49,7 @@ export const CURRENCY_PRECISION: Record<Currency, number | bigint> = {
 export const CURRENCY_DISPLAY_DECIMALS: Record<Currency, number> = {
   USD: 2,
   EUR: 2,
+  GBP: 2,
   BTC: 8,
   ETH: 18,
 };
@@ -61,6 +65,7 @@ export type CurrencyType = 'fiat' | 'crypto';
 export const CURRENCY_TYPE: Record<Currency, CurrencyType> = {
   USD: 'fiat',
   EUR: 'fiat',
+  GBP: 'fiat',
   BTC: 'crypto',
   ETH: 'crypto',
 };
@@ -71,6 +76,7 @@ export const CURRENCY_TYPE: Record<Currency, CurrencyType> = {
 export const CURRENCY_SYMBOLS: Record<Currency, string> = {
   USD: '$',
   EUR: '\u20AC', // Euro sign
+  GBP: '\u00A3', // Pound sign
   BTC: '\u20BF', // Bitcoin sign
   ETH: '\u039E', // Greek capital Xi (commonly used for ETH)
 };

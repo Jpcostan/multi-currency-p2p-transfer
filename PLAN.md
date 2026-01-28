@@ -2514,29 +2514,30 @@ curl -s "http://localhost:3000/api/rates/live?from=USD&to=BTC" | jq '.data.rate'
 
 | #  | Test                                        | Pass  |
 |----|---------------------------------------------|-------|
-| 1  | Docker builds both services                 | [  ]  |
-| 2  | Frontend loads at http://localhost          | [  ]  |
-| 3  | User registration works                     | [  ]  |
-| 4  | User login works                            | [  ]  |
-| 5  | Dashboard displays balances                 | [  ]  |
-| 6  | Deposit funds works                         | [  ]  |
-| 7  | Transfer (same currency) works              | [  ]  |
-| 8  | Transfer (cross-currency) works             | [  ]  |
-| 9  | Transaction history displays                | [  ]  |
-| 10 | Logout clears session                       | [  ]  |
+| 1  | Docker builds both services                 | [✅]  |
+| 2  | Frontend loads at http://localhost          | [✅]  |
+| 3  | User registration works                     | [✅]  |
+| 4  | User login works                            | [✅]  |
+| 5  | Dashboard displays balances                 | [✅]  |
+| 6  | Deposit funds works                         | [✅]  |
+| 7  | Transfer (same currency) works              | [✅]  |
+| 8  | Transfer (cross-currency) works             | [✅]  |
+| 9  | Transaction history displays                | [✅]  |
+| 10 | Logout clears session                       | [✅]  |
 
 **Live Exchange Rates Tests:**
 
 | #  | Test                                        | Pass  |
 |----|---------------------------------------------|-------|
-| 1  | `/api/rates` returns hardcoded rates        | [  ]  |
-| 2  | `/api/rates/live` returns CoinGecko rates   | [  ]  |
-| 3  | Live rates are cached (cached: true)        | [  ]  |
-| 4  | Frontend preview shows live rates           | [  ]  |
-| 5  | Transfers use live rates (check logs)       | [  ]  |
-| 6  | Live rate differs from hardcoded rate       | [  ]  |
+| 1  | `/api/rates` returns hardcoded rates        | [✅]  |
+| 2  | `/api/rates/live` returns CoinGecko rates   | [✅]  |
+| 3  | Live rates are cached (cached: true)        | [✅]  |
+| 4  | Fiat-to-Fiat live rate works (USD→EUR)      | [✅]  |
+| 5  | Frontend preview shows live rates           | [✅]  |
+| 6  | Transfers use live rates (check logs)       | [✅]  |
+| 7  | Live rate differs from hardcoded rate       | [✅]  |
 
-**Phase 8 Testing Completed**: [  ] *(Date: ________)*
+**Phase 8 Testing Completed**: [✅] *(Date: 2026_01_28)*
 
 ---
 

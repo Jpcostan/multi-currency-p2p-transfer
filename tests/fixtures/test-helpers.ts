@@ -101,7 +101,7 @@ export function seedBalance(
  * @param userId - User ID
  */
 export function seedAllBalances(db: Database.Database, userId: number): void {
-  const currencies = ['USD', 'EUR', 'BTC', 'ETH'];
+  const currencies = ['USD', 'EUR', 'GBP', 'BTC', 'ETH'];
   const stmt = db.prepare(`
     INSERT INTO balances (user_id, currency, amount)
     VALUES (?, ?, 0)

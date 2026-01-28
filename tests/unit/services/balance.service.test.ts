@@ -36,6 +36,7 @@ describe('BalanceService', () => {
     // Initialize balances for alice
     seedBalance(db, aliceId, 'USD', 100000n); // $1000
     seedBalance(db, aliceId, 'EUR', 50000n); // €500
+    seedBalance(db, aliceId, 'GBP', 40000n); // £400
     seedBalance(db, aliceId, 'BTC', 10000000n); // 0.1 BTC
     seedBalance(db, aliceId, 'ETH', 2000000000000000000n); // 2 ETH
   });
@@ -49,8 +50,8 @@ describe('BalanceService', () => {
       const result = service.getAllBalances(aliceId);
 
       expect(result.userId).toBe(aliceId);
-      expect(result.balances.length).toBe(4);
-      expect(result.totalBalances).toBe(4);
+      expect(result.balances.length).toBe(5);
+      expect(result.totalBalances).toBe(5);
     });
 
     it('should include currency and formatted amount', () => {
@@ -169,7 +170,7 @@ describe('BalanceService', () => {
       service.initializeBalances(bobId);
 
       const balances = balanceRepository.findAllByUserId(bobId);
-      expect(balances.length).toBe(4);
+      expect(balances.length).toBe(5);
       balances.forEach((balance: Balance) => {
         expect(balance.amount).toBe(0n);
       });

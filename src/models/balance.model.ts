@@ -113,6 +113,7 @@ function formatBalanceDisplay(amount: number, currency: Currency): string {
   const symbols: Record<Currency, string> = {
     USD: '$',
     EUR: '€',
+    GBP: '£',
     BTC: 'BTC',
     ETH: 'ETH',
   };
@@ -120,6 +121,7 @@ function formatBalanceDisplay(amount: number, currency: Currency): string {
   const decimals: Record<Currency, number> = {
     USD: 2,
     EUR: 2,
+    GBP: 2,
     BTC: 8,
     ETH: 8, // Display 8 decimals for ETH (not full 18)
   };

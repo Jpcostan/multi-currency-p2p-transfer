@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { TransactionItem } from '../components/TransactionItem';
 import api from '../services/api';
 import type { Transaction, TransactionStats } from '../types/api';
@@ -14,6 +15,7 @@ const TRANSACTION_TYPES = [
 
 
 export function History() {
+  const { user } = useAuth();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [stats, setStats] = useState<TransactionStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -148,7 +150,7 @@ export function History() {
             ) : (
               <>
                 {transactions.map((tx) => (
-                  <TransactionItem key={tx.id} transaction={tx} />
+                  <TransactionItem key={tx.id} transaction={tx} currentUserId={user?.id || 0} />
                 ))}
 
                 {hasMore && (

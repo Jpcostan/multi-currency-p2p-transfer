@@ -25,16 +25,24 @@ export const CONVERSION_RATES: Record<string, number> = {
   USD_ETH: 0.0003,      // 1 USD = 0.0003 ETH ($3,333/ETH)
   EUR_BTC: 0.000044,    // 1 EUR = 0.000044 BTC
   EUR_ETH: 0.00033,     // 1 EUR = 0.00033 ETH
+  GBP_BTC: 0.00005,     // 1 GBP = 0.00005 BTC
+  GBP_ETH: 0.000375,    // 1 GBP = 0.000375 ETH
 
   // === Fiat to Fiat ===
   USD_EUR: 0.91,        // 1 USD = 0.91 EUR
+  USD_GBP: 0.79,        // 1 USD = 0.79 GBP
   EUR_USD: 1.10,        // 1 EUR = 1.10 USD
+  EUR_GBP: 0.87,        // 1 EUR = 0.87 GBP
+  GBP_USD: 1.27,        // 1 GBP = 1.27 USD
+  GBP_EUR: 1.15,        // 1 GBP = 1.15 EUR
 
   // === Crypto to Fiat ===
   BTC_USD: 25000,       // 1 BTC = $25,000
   BTC_EUR: 22727,       // 1 BTC = 22,727 EUR
+  BTC_GBP: 20000,       // 1 BTC = 20,000 GBP
   ETH_USD: 3333,        // 1 ETH = $3,333
   ETH_EUR: 3030,        // 1 ETH = 3,030 EUR
+  ETH_GBP: 2667,        // 1 ETH = 2,667 GBP
 
   // === Crypto to Crypto ===
   BTC_ETH: 7.5,         // 1 BTC = 7.5 ETH
@@ -43,6 +51,7 @@ export const CONVERSION_RATES: Record<string, number> = {
   // === Identity (same currency) ===
   USD_USD: 1,
   EUR_EUR: 1,
+  GBP_GBP: 1,
   BTC_BTC: 1,
   ETH_ETH: 1,
 };

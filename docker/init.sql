@@ -17,13 +17,13 @@ CREATE TABLE IF NOT EXISTS users (
 -- Balances table
 -- Stores currency balances for each user
 -- IMPORTANT: Amounts are stored as INTEGER in smallest units:
---   USD/EUR: cents (100 = $1.00)
+--   USD/EUR/GBP: cents/pence (100 = $1.00)
 --   BTC: satoshis (100000000 = 1 BTC)
 --   ETH: wei (1000000000000000000 = 1 ETH)
 CREATE TABLE IF NOT EXISTS balances (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-    currency TEXT NOT NULL CHECK(currency IN ('USD', 'EUR', 'BTC', 'ETH')),
+    currency TEXT NOT NULL CHECK(currency IN ('USD', 'EUR', 'GBP', 'BTC', 'ETH')),
     amount INTEGER NOT NULL DEFAULT 0 CHECK(amount >= 0),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS transactions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     sender_id INTEGER NOT NULL,
     receiver_id INTEGER NOT NULL,
-    from_currency TEXT NOT NULL CHECK(from_currency IN ('USD', 'EUR', 'BTC', 'ETH')),
-    to_currency TEXT NOT NULL CHECK(to_currency IN ('USD', 'EUR', 'BTC', 'ETH')),
+    from_currency TEXT NOT NULL CHECK(from_currency IN ('USD', 'EUR', 'GBP', 'BTC', 'ETH')),
+    to_currency TEXT NOT NULL CHECK(to_currency IN ('USD', 'EUR', 'GBP', 'BTC', 'ETH')),
     from_amount INTEGER NOT NULL CHECK(from_amount > 0),
     to_amount INTEGER NOT NULL CHECK(to_amount > 0),
     conversion_rate TEXT NOT NULL,
