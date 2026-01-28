@@ -73,12 +73,17 @@ This starts **two services**:
 - **Frontend** at **http://localhost:80** - React web application
 - **Backend API** at **http://localhost:3000** - REST API
 
-Open **http://localhost** in your browser to use the app.
+**Verify everything is running:**
 
-Verify the API is running:
-```bash
-curl http://localhost:3000/health
-```
+1. **Check the API**:
+   ```bash
+   curl http://localhost:3000/health
+   ```
+
+2. **Open the Frontend**: Navigate to **http://localhost** in your browser
+   - You should see the login page
+   - Login with a pre-seeded user (see [Test Data](#test-data)) or register a new account
+   - Explore the dashboard, make deposits, and try transfers
 
 > **Note**: Docker uses secure default values. For production deployment, set `JWT_SECRET` environment variable to a strong random value.
 
@@ -114,7 +119,31 @@ The database comes **pre-seeded** with two test users ready to use:
 | Alice | alice@example.com | alice | TestPass123 | $1,000.00 USD |
 | Bob | bob@example.com | bob | TestPass123 | $0.00 (empty) |
 
-### Quick Test Commands
+### Testing with Docker (Option 1)
+
+If you ran with Docker, you have both the **frontend** and **backend** available:
+
+**Test via Frontend (Recommended):**
+1. Open **http://localhost** in your browser
+2. Login with username `alice` and password `TestPass123`
+3. View Alice's balance ($1,000 USD) on the dashboard
+4. Try depositing more funds or transferring to Bob
+5. Logout and login as `bob` to verify transfers received
+
+**Test via API:**
+```bash
+# Health check
+curl http://localhost:3000/health
+
+# Login as Alice
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"identifier":"alice","password":"TestPass123"}'
+```
+
+### Testing Locally (Option 2)
+
+If you ran locally without Docker, only the **backend API** is available. Test via curl commands:
 
 **1. Login as Alice:**
 ```bash
