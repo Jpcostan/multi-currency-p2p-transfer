@@ -1,0 +1,145 @@
+.convert-page {
+  padding: 2rem 0;
+}
+
+.convert-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.convert-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.convert-header h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.convert-header p {
+  color: var(--gray-500);
+}
+
+.convert-form .card-body {
+  padding: 2rem;
+}
+
+.convert-box {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  padding: 1rem 1.25rem;
+}
+
+.convert-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+.balance-text {
+  font-size: 0.75rem;
+}
+
+.convert-box-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.convert-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  outline: none;
+  min-width: 0;
+}
+
+.convert-input::placeholder {
+  color: var(--gray-400);
+}
+
+.convert-input:read-only {
+  color: var(--gray-600);
+}
+
+.currency-select {
+  appearance: none;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+}
+
+.swap-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.swap-button {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--gray-200);
+  background: var(--white);
+  border-radius: var(--radius-full);
+  font-size: 1rem;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.swap-button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+.rate-display {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+.rate-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  color: var(--gray-500);
+  font-size: 0.875rem;
+}
+
+.convert-form .btn {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .convert-form .card-body {
+    padding: 1.5rem;
+  }
+
+  .convert-input {
+    font-size: 1.25rem;
+  }
+}

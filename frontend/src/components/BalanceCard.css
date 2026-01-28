@@ -1,0 +1,84 @@
+.balance-card {
+  background: var(--white);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  border: 1px solid var(--gray-100);
+}
+
+.balance-card[role="button"] {
+  cursor: pointer;
+}
+
+.balance-card[role="button"]:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.balance-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.balance-icon {
+  font-size: 1.5rem;
+}
+
+.balance-currency {
+  font-weight: 600;
+  color: var(--gray-600);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+.balance-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.balance-symbol {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--gray-500);
+}
+
+.balance-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1;
+}
+
+.balance-name {
+  margin-top: 0.5rem;
+  color: var(--gray-400);
+  font-size: 0.875rem;
+}
+
+/* Currency-specific accents */
+.currency-card-usd {
+  border-top: 3px solid #22c55e;
+}
+
+.currency-card-eur {
+  border-top: 3px solid #3b82f6;
+}
+
+.currency-card-gbp {
+  border-top: 3px solid #8b5cf6;
+}
+
+.currency-card-btc {
+  border-top: 3px solid #f59e0b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .balance-value {
+    font-size: 1.5rem;
+  }
+}

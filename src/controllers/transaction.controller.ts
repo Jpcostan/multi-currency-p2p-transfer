@@ -7,6 +7,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { getTransactionService } from '@/services/transaction.service';
+import { getLiveConversionRate } from '@/services/live-rate.service';
 import { AuthenticatedRequest } from '@/middleware/auth.middleware';
 import { Currency } from '@/types/currency.types';
 import { TransactionType } from '@/types/transaction.types';
@@ -31,16 +32,16 @@ import { logger } from '@/utils/logger';
  * - 404: Recipient not found
  * - 422: Insufficient balance or business rule violation
  */
-export function transfer(
+export async function transfer(
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+): Promise<void> {
   try {
     const senderId = (req as AuthenticatedRequest).user.userId;
 
     const transactionService = getTransactionService();
-    const result = transactionService.transfer(senderId, {
+    const result = await transactionService.transfer(senderId, {
       recipientIdentifier: req.body.recipientIdentifier || req.body.recipient,
       fromCurrency: req.body.fromCurrency?.toUpperCase() as Currency,
       toCurrency: req.body.toCurrency?.toUpperCase() as Currency,
@@ -236,6 +237,58 @@ export function getConversionRate(
         from: fromCurrency,
         to: toCurrency,
         rate,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * GET /api/rates/live
+ *
+ * Get live conversion rate from CoinGecko API.
+ * Public endpoint (no authentication required).
+ * Results are cached for 5 minutes.
+ *
+ * Query params:
+ * - from: Source currency code
+ * - to: Target currency code
+ *
+ * Response:
+ * - 200: { from, to, rate, source, cached }
+ * - 400: Validation error
+ */
+export async function getLiveRate(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const fromCurrency = (req.query.from as string)?.toUpperCase() as Currency;
+    const toCurrency = (req.query.to as string)?.toUpperCase() as Currency;
+
+    if (!fromCurrency || !toCurrency) {
+      res.status(400).json({
+        success: false,
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Missing required query parameters: from, to',
+        },
+      });
+      return;
+    }
+
+    const result = await getLiveConversionRate(fromCurrency, toCurrency);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        from: fromCurrency,
+        to: toCurrency,
+        rate: result.rate,
+        source: result.source,
+        cached: result.cached,
       },
     });
   } catch (error) {

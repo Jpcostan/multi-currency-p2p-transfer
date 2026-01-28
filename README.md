@@ -11,8 +11,9 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 - **User Authentication** - JWT-based registration and login
 - **Multi-Currency Wallets** - Each user gets USD, EUR, BTC, and ETH balances
 - **P2P Transfers** - Send money to other users by email or username
-- **Currency Conversion** - Automatic conversion when sending different currencies
+- **Currency Conversion** - Automatic conversion with live exchange rates from CoinGecko
 - **Atomic Transactions** - All-or-nothing transfers with balance validation
+- **Modern Frontend** - React-based UI with ZBD-inspired styling
 - **Audit Logging** - Security-sensitive operations logged with data masking
 - **Comprehensive Testing** - 257 tests with 90%+ code coverage
 - **Docker Ready** - Single command to run everything
@@ -23,6 +24,7 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 
 | Category | Technology |
 |----------|------------|
+| **Backend** | |
 | Runtime | Node.js 20.x |
 | Language | TypeScript (strict mode) |
 | Framework | Express.js |
@@ -31,7 +33,15 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 | Authentication | JWT + bcrypt |
 | Testing | Jest + Supertest |
 | Security | Helmet, rate limiting, XSS sanitization |
+| **Frontend** | |
+| Framework | React 19 + TypeScript |
+| Build Tool | Vite |
+| Styling | Custom CSS (ZBD-inspired) |
+| Routing | React Router |
+| HTTP Client | Axios |
+| **Infrastructure** | |
 | Containerization | Docker + Docker Compose |
+| Web Server | Nginx (frontend proxy) |
 
 ---
 
@@ -53,9 +63,13 @@ cd multi-currency-p2p-transfer
 docker-compose up --build
 ```
 
-The API will be available at **http://localhost:3000**
+This starts **two services**:
+- **Frontend** at **http://localhost:80** - React web application
+- **Backend API** at **http://localhost:3000** - REST API
 
-Verify it's running:
+Open **http://localhost** in your browser to use the app.
+
+Verify the API is running:
 ```bash
 curl http://localhost:3000/health
 ```
@@ -94,7 +108,7 @@ http://localhost:3000
 
 ### Authentication
 
-All endpoints except `/health`, `/api/auth/register`, `/api/auth/login`, and `/api/rates` require a JWT token in the Authorization header:
+All endpoints except `/health`, `/api/auth/register`, `/api/auth/login`, `/api/rates`, and `/api/rates/live` require a JWT token in the Authorization header:
 
 ```
 Authorization: Bearer <your-token>
@@ -117,7 +131,8 @@ Authorization: Bearer <your-token>
 | GET | `/api/transactions` | Yes | Get transaction history |
 | GET | `/api/transactions/:id` | Yes | Get single transaction |
 | GET | `/api/transactions/stats` | Yes | Get transaction statistics |
-| GET | `/api/rates` | No | Get conversion rate |
+| GET | `/api/rates` | No | Get hardcoded conversion rate |
+| GET | `/api/rates/live` | No | Get live conversion rate (CoinGecko) |
 | GET | `/api/convert/preview` | Yes | Preview currency conversion |
 
 ---
@@ -310,7 +325,9 @@ curl -X POST http://localhost:3000/api/transfer \
   }'
 ```
 
-#### 8. Get Conversion Rate
+#### 8. Get Conversion Rate (Hardcoded)
+
+This endpoint returns hardcoded demo rates. Useful for testing and manual API exploration.
 
 ```bash
 curl "http://localhost:3000/api/rates?from=USD&to=EUR"
@@ -323,20 +340,44 @@ curl "http://localhost:3000/api/rates?from=USD&to=EUR"
   "data": {
     "from": "USD",
     "to": "EUR",
-    "rate": 0.91,
-    "inverseRate": 1.0989
+    "rate": 0.91
   }
 }
 ```
 
-#### 9. Preview Conversion
+#### 9. Get Live Conversion Rate (CoinGecko)
+
+This endpoint returns real-time exchange rates from CoinGecko API. The frontend and actual transfers use this endpoint.
+
+```bash
+curl "http://localhost:3000/api/rates/live?from=USD&to=BTC"
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "from": "USD",
+    "to": "BTC",
+    "rate": 0.0000112,
+    "source": "coingecko",
+    "cached": false
+  }
+}
+```
+
+- `source`: Where the rate came from (`coingecko` or `hardcoded` fallback)
+- `cached`: Whether the rate was served from cache (rates are cached for 5 minutes)
+
+#### 10. Preview Conversion
 
 ```bash
 curl -X GET "http://localhost:3000/api/convert/preview?from=USD&to=BTC&amount=1000" \
   -H "Authorization: Bearer $TOKEN"
 ```
 
-#### 10. Get Transaction History
+#### 11. Get Transaction History
 
 ```bash
 # Get all transactions
@@ -348,7 +389,7 @@ curl -X GET "http://localhost:3000/api/transactions?limit=10&offset=0&type=trans
   -H "Authorization: Bearer $TOKEN"
 ```
 
-#### 11. Get Transaction Statistics
+#### 12. Get Transaction Statistics
 
 ```bash
 curl -X GET http://localhost:3000/api/transactions/stats \
@@ -366,7 +407,24 @@ curl -X GET http://localhost:3000/api/transactions/stats \
 | Bitcoin | BTC | 8 decimals | 0.00400000 BTC |
 | Ethereum | ETH | 18 decimals | 0.025000000000000000 ETH |
 
-### Conversion Rates (Demo Values)
+### Conversion Rates
+
+This system supports **two types of exchange rates**:
+
+#### Live Rates (Default)
+
+The frontend and all actual transfers use **live exchange rates** from [CoinGecko](https://www.coingecko.com/):
+
+- Real-time crypto prices (BTC, ETH)
+- Fiat rates derived from crypto prices
+- Cached for 5 minutes to avoid rate limiting
+- Automatic fallback to hardcoded rates if API is unavailable
+
+**Endpoint:** `GET /api/rates/live?from=USD&to=BTC`
+
+#### Hardcoded Rates (For Testing)
+
+A separate endpoint provides static demo rates for manual testing and API exploration:
 
 | From | To | Rate |
 |------|-----|------|
@@ -376,6 +434,10 @@ curl -X GET http://localhost:3000/api/transactions/stats \
 | EUR | USD | 1.10 |
 | BTC | USD | 25,000 |
 | ETH | USD | 4,000 |
+
+**Endpoint:** `GET /api/rates?from=USD&to=EUR`
+
+> **Note:** The hardcoded rates use outdated prices (BTC @ $25k). The live rates reflect current market prices.
 
 ---
 
@@ -570,25 +632,40 @@ docker-compose logs -f
 
 ---
 
-## Frontend Application (Coming Soon)
+## Frontend Application
 
-> **Note**: A web-based frontend is planned for Phase 8, styled after [ZBD](https://zbd.gg/).
+The web frontend is a React application styled after [ZBD](https://zbd.gg/) with a clean, modern fintech aesthetic.
 
 ### Running the Full Stack (Backend + Frontend)
 
 ```bash
-# Coming soon - will be a single command:
 docker-compose up --build
 ```
 
-### Frontend Features (Planned)
+This starts both services:
+- **Frontend** at **http://localhost** (port 80) - React web application served by Nginx
+- **Backend API** at **http://localhost:3000** - REST API
 
-- [ ] User registration and login pages
-- [ ] Dashboard with balance overview
-- [ ] Transfer form with currency conversion preview
-- [ ] Transaction history view
-- [ ] Responsive design (mobile-friendly)
-- [ ] Dark theme with modern fintech aesthetic
+### Frontend Features
+
+- [x] User registration and login pages
+- [x] Dashboard with balance overview and deposit functionality
+- [x] Transfer form with live exchange rate preview (CoinGecko)
+- [x] Cross-currency transfers (USD to BTC, etc.)
+- [x] Transaction history with filtering
+- [x] Responsive design (mobile-friendly)
+- [x] Light theme with green accents (#00d632)
+
+### Frontend Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| React 19 | UI framework |
+| TypeScript | Type safety |
+| Vite | Build tool |
+| React Router | Client-side routing |
+| Axios | HTTP client |
+| Nginx | Production server & API proxy |
 
 ---
 

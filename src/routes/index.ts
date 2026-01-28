@@ -10,7 +10,7 @@ import authRoutes from './auth.routes';
 import balanceRoutes from './balance.routes';
 import transactionRoutes from './transaction.routes';
 import { deposit } from '@/controllers/balance.controller';
-import { getConversionRate } from '@/controllers/transaction.controller';
+import { getConversionRate, getLiveRate } from '@/controllers/transaction.controller';
 import { authMiddleware } from '@/middleware/auth.middleware';
 
 const router = Router();
@@ -55,9 +55,11 @@ router.post('/api/deposit', authMiddleware, deposit);
 router.use('/api', transactionRoutes);
 
 /**
- * Conversion rate route (public, no auth)
- * GET /api/rates?from=USD&to=EUR - Get conversion rate
+ * Conversion rate routes (public, no auth)
+ * GET /api/rates?from=USD&to=EUR - Get hardcoded conversion rate
+ * GET /api/rates/live?from=USD&to=EUR - Get live conversion rate from CoinGecko
  */
 router.get('/api/rates', getConversionRate);
+router.get('/api/rates/live', getLiveRate);
 
 export default router;

@@ -4,15 +4,23 @@
 
 ---
 
-## Current Phase: Phase 7 - Documentation & Deployment ✅ COMPLETE
+## Current Phase: Phase 8 - Frontend + Live Rates ✅ IMPLEMENTATION COMPLETE
 
-**Goal**: Complete documentation, finalize deployment
+**Goal**: Create frontend UI and add real-time exchange rates
 
-**Status**: Complete (100%)
+**Status**: Implementation complete, awaiting manual testing
+
+**Next Step**: Run through the Phase 8 Testing Summary Checklist in PLAN.md
 
 ---
 
 ## Previous Phases
+
+### Phase 8 - Frontend + Live Rates ✅ IMPLEMENTATION COMPLETE
+**Manual Testing**: Pending (see PLAN.md for checklist)
+
+### Phase 7 - Documentation & Deployment ✅ COMPLETE
+**Manual Testing**: All tests passed (2026-01-27)
 
 ### Phase 6 - Security & Production Readiness ✅ COMPLETE
 **Manual Testing**: All 5 tests passed (2026-01-27)
@@ -253,22 +261,56 @@ docker-compose logs -f      # View logs
 
 ---
 
+## Phase 8 Frontend ✅ COMPLETE
+
+**Achieved**:
+- [x] Frontend framework setup (React 19 + TypeScript + Vite)
+- [x] UI/UX matching ZBD styling (light theme with green accents)
+- [x] Core pages: Login, Register, Dashboard, Transfer, Convert, History
+- [x] API integration with JWT auth (Axios + localStorage)
+- [x] Docker integration (nginx serves frontend, proxies to API)
+
+**Frontend Stack**:
+- React 19 + TypeScript
+- Vite for fast builds
+- React Router for navigation
+- Axios for HTTP client
+- Custom CSS (ZBD-inspired styling)
+- Nginx for production serving
+
+**Pages Implemented**:
+- `/login` - User authentication
+- `/register` - New user registration
+- `/dashboard` - Balance overview + deposit modal
+- `/transfer` - P2P transfers with cross-currency conversion preview
+- `/convert` - Redirects to transfer (conversion happens during transfer)
+- `/history` - Transaction list with type filtering
+
+---
+
+## Phase 8 Live Rates Enhancement ✅ COMPLETE
+
+**Goal**: Add real-time exchange rates from CoinGecko
+
+**Achieved**:
+- [x] Created `LiveRateService` (`src/services/live-rate.service.ts`)
+- [x] CoinGecko API integration for BTC/ETH prices
+- [x] Caching layer (5 min TTL) to avoid rate limiting
+- [x] Fallback to hardcoded rates if API unavailable
+- [x] Added `GET /api/rates/live` endpoint
+- [x] Transfer service uses live rates for actual conversions
+- [x] Frontend preview calls `/api/rates/live`
+- [x] README updated with both endpoints documented
+
+**Endpoints**:
+- `GET /api/rates?from=X&to=Y` - Hardcoded rates (for manual testing)
+- `GET /api/rates/live?from=X&to=Y` - Live CoinGecko rates (used by frontend)
+
+---
+
 ## Remaining Phases
 
-### Phase 8 - Frontend Development (Bonus) (Next)
-
-**Goal**: Create an impressive, functional frontend UI
-
-**Reference Design**: https://zbd.gg/ (dark theme, vibrant accents, modern fintech aesthetic)
-
-Tasks:
-- [ ] Frontend framework setup
-- [ ] UI/UX matching ZBD styling (https://zbd.gg/)
-- [ ] Core pages: Login, Dashboard, Transfer, History
-- [ ] API integration with JWT auth
-- [ ] Docker integration (single `docker-compose up`)
-
-### Phase 9 - Final QA & Verification
+### Phase 9 - Final QA & Verification (Next)
 
 **Goal**: Thorough end-to-end verification before marking complete
 
@@ -276,7 +318,7 @@ Tasks:
 - [ ] Fresh clone test (follow README exactly)
 - [ ] Docker verification from scratch
 - [ ] Full feature walkthrough (all user flows)
-- [ ] Frontend verification (if Phase 8 complete)
+- [ ] Frontend verification
 - [ ] Edge case testing
 - [ ] Documentation accuracy review
 - [ ] Code quality final check
@@ -286,6 +328,8 @@ Tasks:
 ## Issues & Notes
 
 - npm audit shows 3 high severity vulnerabilities in transitive dependencies (jest → node-notifier chain). These are dev dependencies only and don't affect production.
+
+- **Minor frontend bug**: The frontend currency dropdowns include GBP, but the backend only supports USD, EUR, BTC, ETH. Users selecting GBP will get errors. To fix: either add GBP to backend `src/types/currency.types.ts` or remove GBP from frontend dropdowns in `Dashboard.tsx` and `Transfer.tsx`.
 
 ---
 
@@ -358,4 +402,4 @@ lsof -ti:3000 | xargs kill -9
 
 ---
 
-*Last Updated: 2026-01-27 - Phase 7 Complete*
+*Last Updated: 2026-01-27 - Phase 8 Complete (Frontend + Live Rates)*

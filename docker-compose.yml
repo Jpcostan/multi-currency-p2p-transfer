@@ -4,7 +4,8 @@
 # ==================================
 
 services:
-  app:
+  # Backend API
+  api:
     build:
       context: .
       dockerfile: Dockerfile
@@ -34,6 +35,19 @@ services:
       timeout: 5s
       retries: 3
       start_period: 40s
+
+  # Frontend (React + Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: p2p-payment-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   sqlite-data:

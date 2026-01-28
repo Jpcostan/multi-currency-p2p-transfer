@@ -23,6 +23,7 @@ import {
 import { Currency, SUPPORTED_CURRENCIES } from '@/types/currency.types';
 import { TransactionType } from '@/types/transaction.types';
 import { getConversionRate } from '@/config/rates';
+import { getLiveConversionRate } from '@/services/live-rate.service';
 import { withTransaction } from '@/config/database';
 import { toBaseUnits, fromBaseUnits, formatAmount, isValidAmount } from '@/utils/currency';
 import { logger, auditLogger } from '@/utils/logger';
@@ -212,6 +213,7 @@ export class TransactionService {
    *
    * Validates balances, performs conversion, and updates both users'
    * balances atomically within a database transaction.
+   * Uses live exchange rates from CoinGecko when available.
    *
    * @param senderId - User ID initiating the transfer
    * @param input - Transfer details (recipient, currencies, amount)
@@ -221,7 +223,7 @@ export class TransactionService {
    * @throws InsufficientBalanceError if sender doesn't have enough funds
    * @throws BusinessRuleError if transfer violates business rules
    */
-  transfer(senderId: number, input: TransferInput): TransferResponse {
+  async transfer(senderId: number, input: TransferInput): Promise<TransferResponse> {
     // Validate input
     const parseResult = transferSchema.safeParse(input);
     if (!parseResult.success) {
@@ -259,8 +261,17 @@ export class TransactionService {
       throw new BusinessRuleError('Cannot transfer to yourself');
     }
 
-    // Get conversion rate
-    const rate = getConversionRate(fromCurrency as Currency, toCurrency as Currency);
+    // Get live conversion rate (falls back to hardcoded if API unavailable)
+    const liveRateResult = await getLiveConversionRate(fromCurrency as Currency, toCurrency as Currency);
+    const rate = liveRateResult.rate;
+
+    logger.info('Using conversion rate for transfer', {
+      from: fromCurrency,
+      to: toCurrency,
+      rate,
+      source: liveRateResult.source,
+      cached: liveRateResult.cached,
+    });
 
     // Calculate amounts in base units
     const fromAmountBaseUnits = toBaseUnits(amount, fromCurrency as Currency);
@@ -299,6 +310,7 @@ export class TransactionService {
         amount,
         convertedAmount: toAmountFloat,
         transactionId: transaction.id,
+        rateSource: liveRateResult.source,
       });
 
       // Audit log for compliance
@@ -311,6 +323,7 @@ export class TransactionService {
         fromAmount: amount,
         toAmount: toAmountFloat,
         conversionRate: rate,
+        rateSource: liveRateResult.source,
         action: 'transfer',
       });
 
