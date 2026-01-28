@@ -2609,11 +2609,18 @@ curl -s "http://localhost:3000/api/rates/live?from=USD&to=BTC" | jq '.data.rate'
 **Phase 9 Testing Completed**: [✅] *(Date: 2026_01_28)*
 
 **Summary**:
-- 257/257 automated tests passing
+- 274/274 automated tests passing (was 257)
 - All 15 README curl examples verified working
 - SQL injection, XSS, and authentication security tests passed
 - Edge cases properly handled (negative amounts, insufficient balance, self-transfer, etc.)
 - Bug fixed: `previewConversion` now uses live rates to match actual transfers
+- Fresh clone test performed by separate Claude agent simulating a new user (93% score - Passed)
+
+**Post-Evaluation Improvements** (based on agent feedback):
+- Branch coverage: 68.62% → 74.31% (now above 70% threshold)
+- Added 17 new tests for `sanitize.middleware.ts` (0% → 100% coverage)
+- Added `toCurrency()` type-safe helper to replace `as Currency` assertions
+- Added stricter auth rate limiting (10 attempts / 15 min) to prevent brute force attacks
 
 ---
 

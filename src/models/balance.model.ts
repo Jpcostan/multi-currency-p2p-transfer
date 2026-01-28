@@ -7,7 +7,7 @@
  */
 
 import { z } from 'zod';
-import { Currency, SUPPORTED_CURRENCIES } from '@/types/currency.types';
+import { Currency, SUPPORTED_CURRENCIES, toCurrency } from '@/types/currency.types';
 import { fromBaseUnits } from '@/utils/currency';
 
 /**
@@ -78,7 +78,7 @@ export function rowToBalance(row: BalanceRow): Balance {
   return {
     id: row.id,
     userId: row.user_id,
-    currency: row.currency as Currency,
+    currency: toCurrency(row.currency),
     amount: BigInt(row.amount),
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),

@@ -6,7 +6,7 @@
  */
 
 import { z } from 'zod';
-import { Currency, SUPPORTED_CURRENCIES } from '@/types/currency.types';
+import { Currency, SUPPORTED_CURRENCIES, toCurrency } from '@/types/currency.types';
 import {
   TransactionStatus,
   TransactionType,
@@ -166,8 +166,8 @@ export function rowToTransaction(row: TransactionRow): Transaction {
     id: row.id,
     senderId: row.sender_id,
     receiverId: row.receiver_id,
-    fromCurrency: row.from_currency as Currency,
-    toCurrency: row.to_currency as Currency,
+    fromCurrency: toCurrency(row.from_currency, 'fromCurrency'),
+    toCurrency: toCurrency(row.to_currency, 'toCurrency'),
     fromAmount: BigInt(row.from_amount),
     toAmount: BigInt(row.to_amount),
     conversionRate: row.conversion_rate,

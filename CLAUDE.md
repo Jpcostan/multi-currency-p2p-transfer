@@ -4,22 +4,48 @@
 
 ---
 
-## Current Phase: Phase 9 - Final QA & Verification
+## Current Phase: Phase 10 - README Polish & AI Documentation
 
-**Goal**: Thorough end-to-end verification before marking project complete
+**Goal**: Final documentation cleanup and AI usage transparency
 
 **Status**: Ready to begin
 
-**Previous Phase**: Phase 8 completed with all tests passing (2026-01-28)
+**Previous Phase**: Phase 9 completed with all improvements (2026-01-28)
 
-**Next Phase**: Phase 10 - README Polish & AI Documentation (added 2026-01-28)
+**Next Phase**: Project complete after Phase 10
 
 ---
 
 ## Previous Phases
 
-### Phase 8 - Frontend + Live Rates ✅ IMPLEMENTATION COMPLETE
-**Manual Testing**: Pending (see PLAN.md for checklist)
+### Phase 9 - Final QA & Verification ✅ COMPLETE
+**Completed**: 2026-01-28
+
+**Testing Results**:
+- 274/274 automated tests passing
+- All 15 README curl examples verified
+- Security tests passed (SQL injection, XSS, auth bypass)
+- Fresh clone test: Passed (93% score from separate Claude agent simulating a new user)
+
+**Improvements Made** (based on agent evaluation):
+1. **Branch Coverage**: 68.62% → 74.31% (above 70% threshold)
+   - Added 17 tests for `sanitize.middleware.ts` (0% → 100%)
+2. **Type Safety**: Added `toCurrency()` helper function
+   - Proper type narrowing instead of `as Currency` assertions
+   - Runtime validation in model row conversions
+3. **Auth Rate Limiting**: Stricter brute force protection
+   - 10 attempts per 15 minutes on login/register endpoints
+   - Separate from global 100 req/min limit
+
+**Files Modified**:
+- `src/types/currency.types.ts` - Added `toCurrency()` helper
+- `src/models/transaction.model.ts` - Use type-safe currency conversion
+- `src/models/balance.model.ts` - Use type-safe currency conversion
+- `src/routes/auth.routes.ts` - Added auth-specific rate limiter
+- `tests/unit/middleware/sanitize.middleware.test.ts` - New test file (17 tests)
+
+### Phase 8 - Frontend + Live Rates ✅ COMPLETE
+**Manual Testing**: All features verified working (2026-01-28)
 
 ### Phase 7 - Documentation & Deployment ✅ COMPLETE
 **Manual Testing**: All tests passed (2026-01-27)
@@ -195,6 +221,7 @@ docker-compose logs -f      # View logs
 - JWT for authentication
 - Helmet security headers
 - Rate limiting (100 req/min default)
+- Auth rate limiting (10 attempts/15 min for login/register)
 
 ---
 
@@ -244,7 +271,7 @@ docker-compose logs -f      # View logs
 - [x] XSS sanitization via `xss` package with `sanitizeInput` middleware
 - [x] Dedicated audit logging with sensitive data masking
 - [x] Security audit confirmed (Helmet, rate limiting, parameterized queries)
-- [x] All 257 tests still passing
+- [x] All tests passing (274 as of Phase 9)
 
 **New Files Created**:
 - `src/middleware/sanitize.middleware.ts` - XSS sanitization middleware
@@ -316,23 +343,7 @@ docker-compose logs -f      # View logs
 
 ## Remaining Phases
 
-### Phase 9 - Final QA & Verification (Next)
-
-**Goal**: Thorough end-to-end verification before marking complete
-
-Tasks:
-- [ ] Fresh clone test (follow README exactly)
-- [ ] Docker verification from scratch
-- [ ] Full feature walkthrough (all user flows)
-- [ ] Frontend verification
-- [ ] Edge case testing
-- [ ] Documentation accuracy review
-- [ ] Code quality final check
-- [ ] Local backend testing (npm install, build, test, dev)
-
----
-
-### Phase 10 - README Polish & AI Documentation (After Phase 9)
+### Phase 10 - README Polish & AI Documentation (Current)
 
 **Goal**: Final documentation cleanup and AI usage transparency
 
@@ -451,4 +462,4 @@ lsof -ti:3000 | xargs kill -9
 
 ---
 
-*Last Updated: 2026-01-28 - Added Phase 10 (README Polish & AI Documentation), seeded test users*
+*Last Updated: 2026-01-28 - Phase 9 complete with improvements (branch coverage 74.31%, auth rate limiting, type safety)*

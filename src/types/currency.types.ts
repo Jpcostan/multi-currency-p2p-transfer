@@ -87,3 +87,21 @@ export const CURRENCY_SYMBOLS: Record<Currency, string> = {
 export function isValidCurrency(value: string): value is Currency {
   return SUPPORTED_CURRENCIES.includes(value as Currency);
 }
+
+/**
+ * Validate and narrow a string to Currency type.
+ * Throws an error if the value is not a valid currency.
+ *
+ * Use this instead of `as Currency` assertions for runtime safety.
+ *
+ * @param value - String value to validate
+ * @param fieldName - Name of the field (for error messages)
+ * @returns The value as a Currency type
+ * @throws Error if value is not a valid currency
+ */
+export function toCurrency(value: string, fieldName = 'currency'): Currency {
+  if (isValidCurrency(value)) {
+    return value;
+  }
+  throw new Error(`Invalid ${fieldName}: ${value}. Must be one of: ${SUPPORTED_CURRENCIES.join(', ')}`);
+}
