@@ -125,10 +125,10 @@ If you ran with Docker, you have both the **frontend** and **backend** available
 
 **Test via Frontend (Recommended):**
 1. Open **http://localhost** in your browser
-2. Login with username `alice` and password `TestPass123`
+2. Login with email `alice@example.com` and password `TestPass123`
 3. View Alice's balance ($1,000 USD) on the dashboard
 4. Try depositing more funds or transferring to Bob
-5. Logout and login as `bob` to verify transfers received
+5. Logout and login as `bob@example.com` to verify transfers received
 
 **Test via API:**
 ```bash
