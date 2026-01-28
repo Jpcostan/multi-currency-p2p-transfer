@@ -1,5 +1,14 @@
 # Multi-Currency P2P Payment System
 
+![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests-274%20passing-success)
+![Coverage](https://img.shields.io/badge/Coverage-90%25+-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-blue)
+
 A production-grade **multi-currency peer-to-peer payment system** supporting fiat (USD, EUR, GBP) and cryptocurrency (BTC, ETH) transfers with automatic currency conversion.
 
 Built as a **learning + demonstration system** showcasing real-world backend architecture, transaction safety, and financial precision handling.
@@ -17,6 +26,20 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 - **Audit Logging** - Security-sensitive operations logged with data masking
 - **Comprehensive Testing** - 274 tests with 90%+ code coverage
 - **Docker Ready** - Single command to run everything
+
+---
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/login.png" alt="Login Page" width="280"/>
+  <img src="docs/screenshots/dashboard.png" alt="Dashboard" width="280"/>
+  <img src="docs/screenshots/transfer.png" alt="Transfer Page" width="280"/>
+</p>
+
+<p align="center">
+  <em>Login Page • Dashboard with Balances • Send Money</em>
+</p>
 
 ---
 
