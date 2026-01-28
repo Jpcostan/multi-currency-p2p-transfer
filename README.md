@@ -75,6 +75,49 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 
 ---
 
+## Architecture Overview
+
+```
+                         ┌─────────────────────────────────────────┐
+                         │              NGINX                      │
+    ┌──────────┐         │         (Reverse Proxy)                 │
+    │          │  :80    │                                         │
+    │  Client  │────────►│  /           → React Static Files       │
+    │ (Browser)│         │  /api/*      → Proxy to Backend :3000   │
+    │          │         │                                         │
+    └──────────┘         └──────────────────┬──────────────────────┘
+                                            │
+                                            ▼
+                         ┌─────────────────────────────────────────┐
+                         │           EXPRESS API                   │
+                         │            (Port 3000)                  │
+                         │                                         │
+                         │  Middleware Stack:                      │
+                         │  ┌─────────────────────────────────┐   │
+                         │  │ Helmet (security headers)       │   │
+                         │  │ Compression (gzip)              │   │
+                         │  │ CORS                            │   │
+                         │  │ Rate Limiter                    │   │
+                         │  │ JSON Parser                     │   │
+                         │  │ XSS Sanitizer                   │   │
+                         │  │ Auth Middleware (JWT)           │   │
+                         │  └─────────────────────────────────┘   │
+                         │                                         │
+                         │  Routes → Controllers → Services        │
+                         │                                         │
+                         └──────────────────┬──────────────────────┘
+                                            │
+                                            ▼
+                         ┌─────────────────────────────────────────┐
+                         │              SQLite                     │
+                         │             Database                    │
+                         │                                         │
+                         │  Tables: users, balances, transactions  │
+                         └─────────────────────────────────────────┘
+```
+
+---
+
 ## Quick Start
 
 ### Prerequisites
