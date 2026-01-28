@@ -2626,7 +2626,15 @@ curl -s "http://localhost:3000/api/rates/live?from=USD&to=BTC" | jq '.data.rate'
 
 ### Phase 10: README Polish & AI Documentation
 
-**Goals**: Final documentation cleanup and AI usage transparency
+**Goals**: Human verification, final documentation cleanup, and AI usage transparency
+
+- [ ] Manual clone and verification (human-driven)
+  - [ ] Fresh clone to new directory
+  - [ ] Follow README instructions exactly as a new user would
+  - [ ] Test all documented features and curl examples
+  - [ ] Note any discrepancies, friction points, or bugs
+  - [ ] Communicate findings to Claude for fixes/updates
+  - [ ] Fix any bugs discovered during manual testing
 
 - [ ] README.md comprehensive review
   - [ ] Verify all sections are accurate and complete
@@ -2649,7 +2657,8 @@ curl -s "http://localhost:3000/api/rates/live?from=USD&to=BTC" | jq '.data.rate'
   - [ ] Check all links work (if any)
 
 **Deliverables**:
-- Polished README.md ready for hiring manager review
+- Human-verified working system from fresh clone
+- Polished README.md ready for review
 - Clear AI usage documentation demonstrating transparent AI-assisted development
 - All documentation accurate and professional
 
