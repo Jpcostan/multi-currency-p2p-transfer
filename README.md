@@ -15,16 +15,16 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 - **Atomic Transactions** - All-or-nothing transfers with balance validation
 - **Modern Frontend** - React-based UI with ZBD-inspired styling
 - **Audit Logging** - Security-sensitive operations logged with data masking
-- **Comprehensive Testing** - 257 tests with 90%+ code coverage
+- **Comprehensive Testing** - 274 tests with 90%+ code coverage
 - **Docker Ready** - Single command to run everything
 
 ---
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| **Backend** | |
+### Backend
+| Component | Technology |
+|-----------|------------|
 | Runtime | Node.js 20.x |
 | Language | TypeScript (strict mode) |
 | Framework | Express.js |
@@ -33,13 +33,19 @@ Built as a **learning + demonstration system** showcasing real-world backend arc
 | Authentication | JWT + bcrypt |
 | Testing | Jest + Supertest |
 | Security | Helmet, rate limiting, XSS sanitization |
-| **Frontend** | |
+
+### Frontend
+| Component | Technology |
+|-----------|------------|
 | Framework | React 19 + TypeScript |
 | Build Tool | Vite |
 | Styling | Custom CSS (ZBD-inspired) |
 | Routing | React Router |
 | HTTP Client | Axios |
-| **Infrastructure** | |
+
+### Infrastructure
+| Component | Technology |
+|-----------|------------|
 | Containerization | Docker + Docker Compose |
 | Web Server | Nginx (frontend proxy) |
 
@@ -547,7 +553,7 @@ curl -X POST http://localhost:3000/api/auth/register \
 
 ### Expected Test Results
 
-- **257 tests passing**
+- **274 tests passing**
 - **90%+ code coverage**
 
 ### Run Specific Test Suites
