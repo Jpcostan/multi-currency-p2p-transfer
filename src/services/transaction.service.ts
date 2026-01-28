@@ -361,11 +361,11 @@ export class TransactionService {
    * @returns Conversion preview with rates and formatted amounts
    * @throws ValidationError if currencies or amount are invalid
    */
-  previewConversion(
+  async previewConversion(
     fromCurrency: Currency,
     toCurrency: Currency,
     amount: number
-  ): ConversionPreview {
+  ): Promise<ConversionPreview> {
     // Validate currencies
     if (!SUPPORTED_CURRENCIES.includes(fromCurrency)) {
       throw new ValidationError(`Unsupported currency: ${fromCurrency}`, {
@@ -388,7 +388,8 @@ export class TransactionService {
       });
     }
 
-    const rate = getConversionRate(fromCurrency, toCurrency);
+    // Use live rates to match actual transfer behavior
+    const { rate } = await getLiveConversionRate(fromCurrency, toCurrency);
     const toAmount = amount * rate;
     const inverseRate = 1 / rate;
 

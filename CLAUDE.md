@@ -12,6 +12,8 @@
 
 **Previous Phase**: Phase 8 completed with all tests passing (2026-01-28)
 
+**Next Phase**: Phase 10 - README Polish & AI Documentation (added 2026-01-28)
+
 ---
 
 ## Previous Phases
@@ -326,6 +328,23 @@ Tasks:
 - [ ] Edge case testing
 - [ ] Documentation accuracy review
 - [ ] Code quality final check
+- [ ] Local backend testing (npm install, build, test, dev)
+
+---
+
+### Phase 10 - README Polish & AI Documentation (After Phase 9)
+
+**Goal**: Final documentation cleanup and AI usage transparency
+
+Tasks:
+- [ ] README.md comprehensive review (accuracy, completeness)
+- [ ] Fix any outdated information
+- [ ] Add detailed "AI Usage" section explaining:
+  - PLAN.md purpose (human context and planning document)
+  - CLAUDE.md purpose (AI context continuity between sessions)
+  - How context was orchestrated for AI-assisted development
+- [ ] Cross-reference README with actual implementation
+- [ ] Ensure professional, polished documentation
 
 ---
 
@@ -432,4 +451,4 @@ lsof -ti:3000 | xargs kill -9
 
 ---
 
-*Last Updated: 2026-01-28 - Added GBP currency support (5 currencies total)*
+*Last Updated: 2026-01-28 - Added Phase 10 (README Polish & AI Documentation), seeded test users*

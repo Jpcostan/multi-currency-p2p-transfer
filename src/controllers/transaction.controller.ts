@@ -172,11 +172,11 @@ export function getTransaction(
  * - 400: Validation error
  * - 401: Not authenticated
  */
-export function previewConversion(
+export async function previewConversion(
   req: Request,
   res: Response,
   next: NextFunction
-): void {
+): Promise<void> {
   try {
     const fromCurrency = (req.query.from as string)?.toUpperCase() as Currency;
     const toCurrency = (req.query.to as string)?.toUpperCase() as Currency;
@@ -194,7 +194,7 @@ export function previewConversion(
     }
 
     const transactionService = getTransactionService();
-    const preview = transactionService.previewConversion(fromCurrency, toCurrency, amount);
+    const preview = await transactionService.previewConversion(fromCurrency, toCurrency, amount);
 
     res.status(200).json({
       success: true,

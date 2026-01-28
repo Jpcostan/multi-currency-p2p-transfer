@@ -35,6 +35,7 @@ export default [
         clearTimeout: 'readonly',
         setInterval: 'readonly',
         clearInterval: 'readonly',
+        fetch: 'readonly', // Node.js 18+ native fetch
       },
     },
     plugins: {

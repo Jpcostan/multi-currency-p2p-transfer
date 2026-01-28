@@ -287,8 +287,8 @@ describe('TransactionService', () => {
   });
 
   describe('previewConversion', () => {
-    it('should preview USD to EUR conversion', () => {
-      const result = service.previewConversion('USD', 'EUR', 100);
+    it('should preview USD to EUR conversion', async () => {
+      const result = await service.previewConversion('USD', 'EUR', 100);
 
       expect(result.fromCurrency).toBe('USD');
       expect(result.toCurrency).toBe('EUR');
@@ -300,43 +300,43 @@ describe('TransactionService', () => {
       expect(result.toFormatted).toBe('€91.00');
     });
 
-    it('should preview USD to BTC conversion', () => {
-      const result = service.previewConversion('USD', 'BTC', 25000);
+    it('should preview USD to BTC conversion', async () => {
+      const result = await service.previewConversion('USD', 'BTC', 25000);
 
       expect(result.toAmount).toBe(1); // 25000 * 0.00004 = 1
       expect(result.rate).toBe(0.00004);
     });
 
-    it('should preview same currency conversion', () => {
-      const result = service.previewConversion('USD', 'USD', 100);
+    it('should preview same currency conversion', async () => {
+      const result = await service.previewConversion('USD', 'USD', 100);
 
       expect(result.fromAmount).toBe(100);
       expect(result.toAmount).toBe(100);
       expect(result.rate).toBe(1);
     });
 
-    it('should throw ValidationError for unsupported from currency', () => {
-      expect(() => {
-        service.previewConversion('INVALID' as 'USD', 'EUR', 100);
-      }).toThrow(ValidationError);
+    it('should throw ValidationError for unsupported from currency', async () => {
+      await expect(
+        service.previewConversion('INVALID' as 'USD', 'EUR', 100)
+      ).rejects.toThrow(ValidationError);
     });
 
-    it('should throw ValidationError for unsupported to currency', () => {
-      expect(() => {
-        service.previewConversion('USD', 'INVALID' as 'EUR', 100);
-      }).toThrow(ValidationError);
+    it('should throw ValidationError for unsupported to currency', async () => {
+      await expect(
+        service.previewConversion('USD', 'INVALID' as 'EUR', 100)
+      ).rejects.toThrow(ValidationError);
     });
 
-    it('should throw ValidationError for zero amount', () => {
-      expect(() => {
-        service.previewConversion('USD', 'EUR', 0);
-      }).toThrow(ValidationError);
+    it('should throw ValidationError for zero amount', async () => {
+      await expect(
+        service.previewConversion('USD', 'EUR', 0)
+      ).rejects.toThrow(ValidationError);
     });
 
-    it('should throw ValidationError for negative amount', () => {
-      expect(() => {
-        service.previewConversion('USD', 'EUR', -100);
-      }).toThrow(ValidationError);
+    it('should throw ValidationError for negative amount', async () => {
+      await expect(
+        service.previewConversion('USD', 'EUR', -100)
+      ).rejects.toThrow(ValidationError);
     });
   });
 
