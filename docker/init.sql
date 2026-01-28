@@ -64,19 +64,10 @@ CREATE INDEX IF NOT EXISTS idx_transactions_sender ON transactions(sender_id, cr
 CREATE INDEX IF NOT EXISTS idx_transactions_receiver ON transactions(receiver_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_transactions_status ON transactions(status);
 
--- ===== Seed Test Data (Development Only) =====
--- Uncomment below to add test users on initialization
--- Passwords are hashed with bcrypt (12 rounds)
--- Password for both users: "Password123!"
-
--- INSERT OR IGNORE INTO users (id, email, username, password_hash) VALUES
---   (1, 'alice@example.com', 'alice', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/X.VQ0YaVaJVs.3/kW'),
---   (2, 'bob@example.com', 'bob', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/X.VQ0YaVaJVs.3/kW');
-
--- INSERT OR IGNORE INTO balances (user_id, currency, amount) VALUES
---   (1, 'USD', 100000),    -- Alice: $1,000.00
---   (1, 'EUR', 50000),     -- Alice: 500.00 EUR
---   (1, 'BTC', 10000000),  -- Alice: 0.1 BTC
---   (1, 'ETH', 2000000000000000000), -- Alice: 2 ETH
---   (2, 'USD', 200000),    -- Bob: $2,000.00
---   (2, 'BTC', 5000000);   -- Bob: 0.05 BTC
+-- ===== Seed Test Data =====
+-- NOTE: Test users are seeded by the application (src/config/database.ts)
+-- when NODE_ENV is not 'test'. This keeps the schema file clean for unit tests.
+--
+-- Pre-seeded users (password: TestPass123):
+--   - alice@example.com (alice) - $1,000 USD
+--   - bob@example.com (bob) - $0 (empty balances)

@@ -1,6 +1,6 @@
 # Multi-Currency P2P Payment System
 
-A production-grade **multi-currency peer-to-peer payment system** supporting fiat (USD, EUR) and cryptocurrency (BTC, ETH) transfers with automatic currency conversion.
+A production-grade **multi-currency peer-to-peer payment system** supporting fiat (USD, EUR, GBP) and cryptocurrency (BTC, ETH) transfers with automatic currency conversion.
 
 Built as a **learning + demonstration system** showcasing real-world backend architecture, transaction safety, and financial precision handling.
 
@@ -96,6 +96,53 @@ npm run dev
 The API will be available at **http://localhost:3000**
 
 > **Note**: The SQLite database will be created automatically in `./data/database.sqlite`
+
+---
+
+## Test Data
+
+The database comes **pre-seeded** with two test users ready to use:
+
+| User | Email | Username | Password | Starting Balance |
+|------|-------|----------|----------|------------------|
+| Alice | alice@example.com | alice | TestPass123 | $1,000.00 USD |
+| Bob | bob@example.com | bob | TestPass123 | $0.00 (empty) |
+
+### Quick Test Commands
+
+**1. Login as Alice:**
+```bash
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"identifier":"alice","password":"TestPass123"}'
+
+# Save the token from the response
+ALICE_TOKEN="<token-from-response>"
+```
+
+**2. Check Alice's balances:**
+```bash
+curl -H "Authorization: Bearer $ALICE_TOKEN" http://localhost:3000/api/balances
+```
+
+**3. Transfer $100 USD from Alice to Bob (Bob receives EUR):**
+```bash
+curl -X POST http://localhost:3000/api/transfer \
+  -H "Authorization: Bearer $ALICE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"recipientIdentifier":"bob","fromCurrency":"USD","toCurrency":"EUR","amount":100}'
+```
+
+**4. Login as Bob and verify receipt:**
+```bash
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"identifier":"bob","password":"TestPass123"}'
+
+# Check Bob's balances (should show EUR received)
+BOB_TOKEN="<token-from-response>"
+curl -H "Authorization: Bearer $BOB_TOKEN" http://localhost:3000/api/balances
+```
 
 ---
 
@@ -217,6 +264,7 @@ curl -X GET http://localhost:3000/api/balances \
     "balances": [
       { "currency": "USD", "amount": 0, "formatted": "$0.00" },
       { "currency": "EUR", "amount": 0, "formatted": "0.00 EUR" },
+      { "currency": "GBP", "amount": 0, "formatted": "0.00 GBP" },
       { "currency": "BTC", "amount": 0, "formatted": "0.00000000 BTC" },
       { "currency": "ETH", "amount": 0, "formatted": "0.000000000000000000 ETH" }
     ]
@@ -404,6 +452,7 @@ curl -X GET http://localhost:3000/api/transactions/stats \
 |----------|------|-----------|---------|
 | US Dollar | USD | 2 decimals | $100.00 |
 | Euro | EUR | 2 decimals | 91.00 EUR |
+| British Pound | GBP | 2 decimals | 85.00 GBP |
 | Bitcoin | BTC | 8 decimals | 0.00400000 BTC |
 | Ethereum | ETH | 18 decimals | 0.025000000000000000 ETH |
 
@@ -429,9 +478,11 @@ A separate endpoint provides static demo rates for manual testing and API explor
 | From | To | Rate |
 |------|-----|------|
 | USD | EUR | 0.91 |
+| USD | GBP | 0.79 |
 | USD | BTC | 0.00004 |
 | USD | ETH | 0.00025 |
 | EUR | USD | 1.10 |
+| GBP | USD | 1.27 |
 | BTC | USD | 25,000 |
 | ETH | USD | 4,000 |
 

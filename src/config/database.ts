@@ -70,6 +70,23 @@ CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
 `;
 
 /**
+ * Seed data for test users.
+ * Password for both users: "TestPass123"
+ * Alice starts with $1,000 USD, Bob starts with empty balances.
+ */
+const SEED_DATA = `
+-- Test users (password: TestPass123)
+INSERT OR IGNORE INTO users (id, email, username, password_hash) VALUES
+  (1, 'alice@example.com', 'alice', '$2b$12$v5gqdos54o9e9KBts5bcEOuYEvl/SJ3D6Tu/tUeORcs/CwxdLPOrm'),
+  (2, 'bob@example.com', 'bob', '$2b$12$v5gqdos54o9e9KBts5bcEOuYEvl/SJ3D6Tu/tUeORcs/CwxdLPOrm');
+
+-- Alice's balances ($1,000 USD)
+INSERT OR IGNORE INTO balances (user_id, currency, amount) VALUES
+  (1, 'USD', 100000), (1, 'EUR', 0), (1, 'GBP', 0), (1, 'BTC', 0), (1, 'ETH', 0),
+  (2, 'USD', 0), (2, 'EUR', 0), (2, 'GBP', 0), (2, 'BTC', 0), (2, 'ETH', 0);
+`;
+
+/**
  * Initialize the database connection.
  * Creates the data directory and database file if they don't exist.
  *
@@ -99,6 +116,13 @@ export function initializeDatabase(dbPath: string): Database.Database {
 
   // Initialize schema
   db.exec(SCHEMA);
+
+  // Seed test data only in non-test environments
+  // Tests create their own isolated data
+  if (process.env.NODE_ENV !== 'test') {
+    db.exec(SEED_DATA);
+    logger.info('Seeded test users: alice@example.com, bob@example.com');
+  }
 
   logger.info(`Database initialized at: ${dbPath}`);
 

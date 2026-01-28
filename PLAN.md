@@ -2206,7 +2206,7 @@ cat logs/audit.log | head -5
 │  │ Health check           │ ✅ Returns 200 OK                         │ │
 │  │ User registration      │ ✅ Creates user, returns JWT              │ │
 │  │ User login             │ ✅ Authenticates, returns JWT             │ │
-│  │ Get balances           │ ✅ Returns all 4 currency balances        │ │
+│  │ Get balances           │ ✅ Returns all 5 currency balances        │ │
 │  │ Deposit funds          │ ✅ Creates transaction, updates balance   │ │
 │  │ P2P transfer           │ ✅ Transfers between users                │ │
 │  │ Conversion rates       │ ✅ Returns rate (no auth required)        │ │
@@ -2390,7 +2390,7 @@ http://localhost
 
 **4. View Dashboard**
 ✓ Expected:
-- 4 balance cards (USD, EUR, GBP, BTC) all showing 0.00
+- 5 balance cards (USD, EUR, GBP, BTC, ETH) all showing 0.00
 - Quick actions panel
 - Empty recent transactions
 
