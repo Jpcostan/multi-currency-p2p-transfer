@@ -604,29 +604,51 @@ npm rebuild better-sqlite3
 
 ```
 multi-currency-p2p-transfer/
-├── src/
-│   ├── config/           # Environment & database config
-│   │   ├── database.ts   # SQLite setup & schema
-│   │   ├── env.ts        # Environment validation (Zod)
-│   │   └── rates.ts      # Currency conversion rates
-│   ├── controllers/      # HTTP request handlers
-│   ├── services/         # Business logic layer
-│   ├── repositories/     # Data access layer
-│   ├── models/           # Domain entities & validation
-│   ├── middleware/       # Auth, error handling, sanitization
-│   ├── routes/           # API route definitions
-│   ├── types/            # TypeScript type definitions
-│   ├── utils/            # Helpers (logger, errors, currency)
-│   ├── app.ts            # Express app configuration
-│   └── server.ts         # Entry point
+├── src/                      # Backend source code
+│   ├── config/               # Environment & database config
+│   │   ├── database.ts       # SQLite setup & schema
+│   │   ├── env.ts            # Environment validation (Zod)
+│   │   └── rates.ts          # Currency conversion rates
+│   ├── controllers/          # HTTP request handlers
+│   ├── services/             # Business logic layer
+│   ├── repositories/         # Data access layer
+│   ├── models/               # Domain entities & validation
+│   ├── middleware/           # Auth, error handling, sanitization
+│   ├── routes/               # API route definitions
+│   ├── types/                # TypeScript type definitions
+│   ├── utils/                # Helpers (logger, errors, currency)
+│   ├── app.ts                # Express app configuration
+│   └── server.ts             # Entry point
+├── frontend/                 # React frontend application
+│   ├── src/
+│   │   ├── components/       # Reusable UI components
+│   │   │   ├── BalanceCard.tsx
+│   │   │   ├── Header.tsx
+│   │   │   └── TransactionItem.tsx
+│   │   ├── pages/            # Page components
+│   │   │   ├── Login.tsx
+│   │   │   ├── Register.tsx
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── Transfer.tsx
+│   │   │   ├── Convert.tsx
+│   │   │   └── History.tsx
+│   │   ├── context/          # React context (AuthContext)
+│   │   ├── services/         # API client (Axios)
+│   │   ├── types/            # TypeScript types
+│   │   ├── App.tsx           # Main app with routing
+│   │   ├── main.tsx          # Entry point
+│   │   └── index.css         # Global styles (ZBD-inspired)
+│   ├── Dockerfile            # Frontend container config
+│   ├── nginx.conf            # Nginx reverse proxy config
+│   └── package.json
 ├── tests/
-│   ├── unit/             # Unit tests
-│   ├── integration/      # API integration tests
-│   └── fixtures/         # Test helpers & setup
+│   ├── unit/                 # Unit tests
+│   ├── integration/          # API integration tests
+│   └── fixtures/             # Test helpers & setup
 ├── docker/
-│   └── init.sql          # Database initialization
-├── Dockerfile
-├── docker-compose.yml
+│   └── init.sql              # Database initialization
+├── Dockerfile                # Backend container config
+├── docker-compose.yml        # Multi-container orchestration
 ├── package.json
 ├── tsconfig.json
 └── jest.config.js
