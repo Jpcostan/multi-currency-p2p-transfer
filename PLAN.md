@@ -2679,9 +2679,11 @@ curl -s "http://localhost:3000/api/rates/live?from=USD&to=BTC" | jq '.data.rate'
   - [x] Add shields.io badges (Node, TypeScript, React, Docker, Tests, Coverage, License)
   - [x] Add frontend screenshots (Login, Dashboard, Transfer)
 
-- [ ] GitHub Actions CI (Optional)
-  - [ ] Auto-run tests on push
-  - [ ] Coverage reporting
+- [x] GitHub Actions CI
+  - [x] Auto-run tests on push
+  - [x] Lint and type check
+  - [x] Build verification (backend + frontend)
+  - [x] Docker build verification
 
 **Deliverables**:
 - Interactive API documentation at `/api/docs`
