@@ -884,6 +884,72 @@ This is a **demonstration/learning project**. It is NOT intended for real financ
 
 ---
 
-## Acknowledgments
+## AI Usage
 
-Built with assistance from **Claude** (Anthropic's AI assistant) as a demonstration of AI-assisted software development.
+This project was built using **AI-assisted development** with [Claude](https://claude.ai) (Anthropic) via [Claude Code](https://claude.ai/claude-code). Rather than simply "vibe coding" or running multiple disconnected AI sessions, we (Me + Claude) employed a structured **context orchestration methodology** that maintains human control while maximizing AI productivity.
+
+### The Context Orchestration Approach
+
+AI assistants have limited context windows. Without a system to preserve state across sessions, developers often resort to starting fresh conversations—losing accumulated context, decisions, and momentum. We solved this with two coordination files:
+
+| File | Purpose |
+|------|---------|
+| **PLAN.md** | Human-owned project roadmap with phases, tasks, and completion status |
+| **CLAUDE.md** | AI context file with current phase objectives, constraints, and session state |
+
+### Development Workflow
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    PHASE EXECUTION CYCLE                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  1. PLAN PHASE                                                  │
+│     └── Human updates PLAN.md with phase requirements           │
+│                                                                 │
+│  2. PREPARE CONTEXT                                             │
+│     └── Update CLAUDE.md with:                                  │
+│         • Current phase objectives                              │
+│         • Definition of "done"                                  │
+│         • Constraints and guidelines                            │
+│                                                                 │
+│  3. EXECUTE                                                     │
+│     └── AI implements the phase with full context               │
+│                                                                 │
+│  4. DOCUMENT COMPLETION                                         │
+│     └── Update PLAN.md: mark tasks complete, add notes          │
+│     └── Update CLAUDE.md: reflect new state for next session    │
+│                                                                 │
+│  5. REPEAT                                                      │
+│     └── Continue to next phase                                  │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+This same cycle applies to mid-phase changes: if requirements shift or bugs emerge, both files are updated to reflect reality before continuing.
+
+### Why Single-Session Orchestration?
+
+Many developers use what might be called the "shotgun approach"—spinning up multiple parallel AI sessions, each working on different pieces, then manually integrating the results. While this can work for independent tasks, it introduces several problems:
+
+| Approach | Pros | Cons |
+|----------|------|------|
+| **Parallel Sessions** | Faster for independent tasks | Context fragmentation, integration conflicts, inconsistent patterns |
+| **Single Orchestrated Session** | Unified context, consistent architecture, human remains in control | Requires token budget, sequential execution |
+
+For a project requiring architectural coherence—where authentication, database schema, API design, and frontend must all align—**single-session orchestration proved superior**. The AI maintained awareness of every prior decision, producing consistent code patterns and catching integration issues before they occurred.
+
+### Key Benefits Observed
+
+1. **Architectural Consistency** - The AI remembered why decisions were made and applied them uniformly
+2. **Reduced Rework** - No time spent reconciling conflicting implementations from parallel sessions
+3. **Human Control** - The developer (human) approved each phase before execution began
+4. **Auditable History** - PLAN.md and CLAUDE.md serve as a decision log for the entire project
+5. **Resumable Sessions** - If context is lost, the markdown files restore full project state
+
+### Files in This Repository
+
+- **PLAN.md** - Complete development plan with 10 phases, task checklists, and architectural decisions
+- **CLAUDE.md** - AI context file showing current state and session continuity notes
+
+These files are included in the repository as a reference for others interested in structured AI-assisted development.
