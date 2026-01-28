@@ -2664,6 +2664,32 @@ curl -s "http://localhost:3000/api/rates/live?from=USD&to=BTC" | jq '.data.rate'
 
 ---
 
+### Bonus++ Enhancements
+
+**Goals**: Add professional polish and developer experience improvements
+
+- [x] Swagger/OpenAPI Documentation
+  - [x] Install swagger-ui-express and swagger-jsdoc packages
+  - [x] Create OpenAPI specification for all endpoints
+  - [x] Mount Swagger UI at `/api/docs`
+  - [x] Document request/response schemas
+  - [x] Add README section for Swagger
+
+- [ ] README Visual Polish (Completed)
+  - [x] Add shields.io badges (Node, TypeScript, React, Docker, Tests, Coverage, License)
+  - [x] Add frontend screenshots (Login, Dashboard, Transfer)
+
+- [ ] GitHub Actions CI (Optional)
+  - [ ] Auto-run tests on push
+  - [ ] Coverage reporting
+
+**Deliverables**:
+- Interactive API documentation at `/api/docs`
+- Professional README with badges and screenshots
+- (Optional) CI pipeline for automated testing
+
+---
+
 ## Testing Strategy
 
 ### Testing Pyramid

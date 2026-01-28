@@ -213,6 +213,21 @@ http://localhost:3000
 
 > **Note**: The root URL (`/`) has no endpoint. Use `GET /health` to verify the server is running.
 
+### Interactive API Documentation (Swagger)
+
+This API includes **Swagger UI** for interactive documentation and testing:
+
+```
+http://localhost:3000/api/docs
+```
+
+<p align="center">
+  <strong>Features:</strong><br/>
+  Browse all endpoints • View request/response schemas • Try API calls directly in browser
+</p>
+
+Open `/api/docs` in your browser to explore the API without needing curl or Postman.
+
 ### Authentication
 
 All endpoints except `/health`, `/api/auth/register`, `/api/auth/login`, `/api/rates`, and `/api/rates/live` require a JWT token in the Authorization header:

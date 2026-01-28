@@ -10,10 +10,12 @@ import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
 import { env } from '@/config/env';
 import { logger } from '@/utils/logger';
 import { errorHandler, notFoundHandler } from '@/middleware/error.middleware';
 import { sanitizeInput } from '@/middleware/sanitize.middleware';
+import { swaggerSpec } from '@/config/swagger';
 import routes from '@/routes';
 
 /**
@@ -55,8 +57,8 @@ export function createApp(): Application {
       },
     },
     skip: (req) => {
-      // Skip rate limiting for health checks
-      return req.path.startsWith('/health');
+      // Skip rate limiting for health checks and API docs
+      return req.path.startsWith('/health') || req.path.startsWith('/api/docs');
     },
   });
   app.use(limiter);
@@ -93,6 +95,14 @@ export function createApp(): Application {
 
     next();
   });
+
+  // ===== API Documentation =====
+
+  // Swagger UI at /api/docs
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'P2P Transfer API Docs',
+  }));
 
   // ===== Routes =====
 
