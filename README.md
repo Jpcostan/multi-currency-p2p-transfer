@@ -159,6 +159,8 @@ curl -H "Authorization: Bearer $BOB_TOKEN" http://localhost:3000/api/balances
 http://localhost:3000
 ```
 
+> **Note**: The root URL (`/`) has no endpoint. Use `GET /health` to verify the server is running.
+
 ### Authentication
 
 All endpoints except `/health`, `/api/auth/register`, `/api/auth/login`, `/api/rates`, and `/api/rates/live` require a JWT token in the Authorization header:
@@ -198,8 +200,8 @@ Authorization: Bearer <your-token>
 curl -X POST http://localhost:3000/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
-    "email": "alice@example.com",
-    "username": "alice",
+    "email": "charlie@example.com",
+    "username": "charlie",
     "password": "SecurePass123!"
   }'
 ```
@@ -210,9 +212,9 @@ curl -X POST http://localhost:3000/api/auth/register \
   "success": true,
   "data": {
     "user": {
-      "id": 1,
-      "email": "alice@example.com",
-      "username": "alice",
+      "id": 3,
+      "email": "charlie@example.com",
+      "username": "charlie",
       "createdAt": "2026-01-27T12:00:00.000Z"
     },
     "token": "eyJhbGciOiJIUzI1NiIs..."
@@ -220,13 +222,15 @@ curl -X POST http://localhost:3000/api/auth/register \
 }
 ```
 
+> **Note**: Alice and Bob are pre-seeded (see [Test Data](#test-data)). Use a different username to test registration.
+
 #### 2. Login
 
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
-    "identifier": "alice@example.com",
+    "identifier": "charlie@example.com",
     "password": "SecurePass123!"
   }'
 ```
@@ -236,7 +240,7 @@ curl -X POST http://localhost:3000/api/auth/login \
 {
   "success": true,
   "data": {
-    "user": { "id": 1, "email": "alice@example.com", "username": "alice" },
+    "user": { "id": 3, "email": "charlie@example.com", "username": "charlie" },
     "token": "eyJhbGciOiJIUzI1NiIs..."
   }
 }
@@ -315,18 +319,7 @@ curl -X POST http://localhost:3000/api/deposit \
 
 #### 6. Transfer to Another User
 
-First, register a second user (Bob):
-```bash
-curl -X POST http://localhost:3000/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "email": "bob@example.com",
-    "username": "bob",
-    "password": "SecurePass123!"
-  }'
-```
-
-Then transfer from Alice to Bob:
+Transfer to Bob (pre-seeded user):
 ```bash
 curl -X POST http://localhost:3000/api/transfer \
   -H "Content-Type: application/json" \
